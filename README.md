@@ -65,6 +65,51 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+## Server Management
+
+The project includes bash scripts to easily manage both Django and React servers.
+
+### Using the Server Management Scripts
+
+1. Start both servers:
+```bash
+./scripts/start_servers.sh
+```
+
+2. Start only Django server:
+```bash
+./scripts/start_servers.sh django
+```
+
+3. Start only React server:
+```bash
+./scripts/start_servers.sh react
+```
+
+4. Stop both servers:
+```bash
+./scripts/stop_servers.sh
+```
+
+5. Stop only Django server:
+```bash
+./scripts/stop_servers.sh django
+```
+
+6. Stop only React server:
+```bash
+./scripts/stop_servers.sh react
+```
+
+### Manual Server Management
+
+If you prefer to start the servers manually:
+
+1. Start the Django development server:
+```bash
+python manage.py runserver
+```
+
 ### Frontend Setup
 1. Install dependencies:
 ```bash
@@ -92,7 +137,37 @@ DB_HOST=localhost
 DB_PORT=5432
 
 # React Settings
-REACT_APP_API_URL=http://localhost:8000
+REACT_APP_ENV=dev  # or 'prod' for production
+```
+
+## API Configuration
+The frontend uses a configurable API endpoint system. The configuration is located in `frontend/src/config/api.js` and supports different environments:
+
+```javascript
+const API_CONFIG = {
+  dev: {
+    baseUrl: 'http://localhost:8000',
+    endpoints: {
+      transactions: '/api/transactions/',
+    },
+  },
+  prod: {
+    baseUrl: 'https://api.yourdomain.com',
+    endpoints: {
+      transactions: '/api/transactions/',
+    },
+  },
+};
+```
+
+To switch between environments, set the `REACT_APP_ENV` environment variable:
+
+```bash
+# Development
+REACT_APP_ENV=dev npm start
+
+# Production
+REACT_APP_ENV=prod npm start
 ```
 
 ## Security Note
