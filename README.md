@@ -15,10 +15,20 @@ A full-stack web application for managing cash flow and expenses.
 cash_manager/
 ├── backend/           # Django backend
 ├── frontend/          # React frontend
-└── .env              # Environment variables (DO NOT COMMIT)
+├── .env              # Environment variables (DO NOT COMMIT)
+└── frontend/.env.development  # Frontend development environment variables
 ```
 
 ## Setup Instructions
+
+### Environment Setup
+
+1. Create a `.env` file in the root directory with your database and backend configurations.
+2. For frontend development, create a `.env.development` file in the frontend directory:
+   ```
+   REACT_APP_ENV=dev
+   REACT_APP_API_URL=http://localhost:8000
+   ```
 
 ### Backend Setup
 1. Install and configure pyenv if you haven't already:
