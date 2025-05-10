@@ -29,10 +29,35 @@ CORS_ALLOW_CREDENTIALS = True
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Custom User model
+AUTH_USER_MODEL = "users.User"
+
 ALLOWED_HOSTS = []
 
 
 # Application definition
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+}
+
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Token": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "Authorization",
+            "description": 'Token-based authentication with the required prefix "Token"',
+        }
+    },
+    "SECURITY": [{"Token": []}],
+}
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -46,7 +71,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "drf_yasg",
     "core",
-    "cash_manager.users",
+    "users",
 ]
 
 MIDDLEWARE = [

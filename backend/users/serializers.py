@@ -32,15 +32,16 @@ class UserSerializer(serializers.ModelSerializer):
 class AuthTokenSerializer(serializers.ModelSerializer):
     """Serializer for user authentication object."""
 
-    email = serializers.EmailField()
-    password = serializers.CharField(
-        style={"input_type": "password"}, trim_whitespace=False
-    )
-
     class Meta:
         model = User
-        fields = ("email", "password", "user")
-        read_only_fields = ("user",)
+        fields = ("email", "password")
+        extra_kwargs = {
+            "password": {
+                "style": {"input_type": "password"},
+                "trim_whitespace": False,
+                "write_only": True,
+            }
+        }
 
     def validate(self, attrs):
         """Validate and authenticate the user."""
