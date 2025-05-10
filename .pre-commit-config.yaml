@@ -1,0 +1,35 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
+        language_version: python3.13
+        args: ['--line-length=88']
+        stages: [pre-commit]
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.1.0
+    hooks:
+      - id: flake8
+        language_version: python3.13
+        additional_dependencies: ["flake8-docstrings"]
+        args: ["--max-line-length=88"]
+        stages: [pre-commit]
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        language_version: python3.13
+        args: ["--profile", "black"]
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: safety-check
+        name: Run safety check
+        language: system
+        entry: ./scripts/safety-check.sh
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
