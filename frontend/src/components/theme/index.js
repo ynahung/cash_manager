@@ -1,74 +1,43 @@
 import { styled } from "@mui/material/styles";
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Avatar,
-} from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme";
+import { Box, Card, Typography, Button } from "@mui/material";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 
 export const PageLayout = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(4),
-  maxWidth: "1200px",
-  margin: "0 auto",
-  bgcolor:
-    theme.palette.mode === "dark"
-      ? theme.palette.background.default
-      : "inherit",
-  minHeight: "100vh",
-  pt: 4, // Add some top padding
+  padding: theme.spacing(3),
+  width: "100%",
 }));
 
 export const CardLayout = styled(Card)(({ theme }) => ({
-  padding: theme.spacing(2),
+  padding: theme.spacing(3),
   marginBottom: theme.spacing(3),
-  "&:last-child": {
-    marginBottom: 0,
-  },
+  backgroundColor: theme.palette.background.paper,
 }));
 
 export const TransactionCard = styled(Card)(({ theme }) => ({
   padding: theme.spacing(2),
-  width: "100%",
-  maxWidth: 300,
-  borderRadius: theme.spacing(1),
+  marginBottom: theme.spacing(2),
+  backgroundColor: theme.palette.background.paper,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
 }));
 
 export const PrimaryButton = styled(Button)(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.light
-      : theme.palette.primary.main,
-  color: "white",
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.common.white,
   "&:hover": {
-    backgroundColor:
-      theme.palette.mode === "dark"
-        ? theme.palette.primary.main
-        : theme.palette.primary.dark,
-  },
-  "&:disabled": {
-    backgroundColor:
-      theme.palette.mode === "dark"
-        ? theme.palette.primary.main
-        : theme.palette.primary.light,
+    backgroundColor: theme.palette.primary.dark,
   },
 }));
 
 export const SecondaryButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.main,
-  color: theme.palette.mode === "dark" ? "white" : "inherit",
+  color: theme.palette.common.white,
   "&:hover": {
     backgroundColor: theme.palette.secondary.dark,
-  },
-  "&:disabled": {
-    backgroundColor: theme.palette.secondary.light,
   },
 }));
 

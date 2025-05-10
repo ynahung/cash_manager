@@ -1,16 +1,28 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import App from "./App";
+import { BrowserRouter as Router } from "react-router-dom";
+import Home from "./pages/Home";
 
 test("renders welcome message", () => {
-  render(<App />);
+  render(
+    <Router>
+      <Home />
+    </Router>,
+  );
   const welcomeElement = screen.getByText(/Welcome to Cash Manager/i);
   expect(welcomeElement).toBeInTheDocument();
 });
 
-test("renders transactions links", () => {
-  render(<App />);
-  const viewTransactionsButton = screen.getByText(/View Transactions/i);
-  const addTransactionButton = screen.getByText(/Add New Transaction/i);
-  expect(viewTransactionsButton).toBeInTheDocument();
-  expect(addTransactionButton).toBeInTheDocument();
+test("renders navigation links", () => {
+  render(
+    <Router>
+      <Home />
+    </Router>,
+  );
+  const dashboardLink = screen.getByText(/Dashboard/i, { selector: "span" });
+  const transactionsLink = screen.getByText(/Transactions/i, {
+    selector: "span",
+  });
+  expect(dashboardLink).toBeInTheDocument();
+  expect(transactionsLink).toBeInTheDocument();
 });

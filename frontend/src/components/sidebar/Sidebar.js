@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  Drawer,
-  IconButton,
-  useTheme,
-} from "@mui/material";
+import { Box, List, ListItem, ListItemText } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -15,20 +7,12 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 const SidebarContainer = styled(Box)(({ theme, collapsed }) => ({
   width: collapsed ? 60 : 240,
   height: "100vh",
-  backgroundColor: useTheme().palette.background,
+  backgroundColor: theme.palette.background,
   borderRight: "1px solid",
   borderColor: theme.palette.divider,
   display: "flex",
   flexDirection: "column",
   position: "relative",
-}));
-
-const SidebarHeader = styled(Box)(({ theme, collapsed }) => ({
-  display: collapsed ? "none" : "flex",
-  alignItems: "center",
-  padding: "16px",
-  borderBottom: collapsed ? "none" : "1px solid",
-  borderColor: "divider",
 }));
 
 const SidebarContent = styled(Box)(({ theme, collapsed }) => ({
@@ -52,18 +36,17 @@ const SidebarItem = styled(ListItem)({
   },
 });
 
-const Sidebar = ({
+function Sidebar({
   items = [],
   header = null,
   footer = null,
   selected = null,
   open = true,
   position = "left",
-  collapsed = false,
   onToggle = () => {},
   onItemClick = () => {},
-}) => {
-  const theme = useTheme();
+}) {
+  const collapsed = false;
   return (
     <Box
       sx={{
@@ -188,6 +171,6 @@ const Sidebar = ({
       </SidebarContainer>
     </Box>
   );
-};
+}
 
 export default Sidebar;

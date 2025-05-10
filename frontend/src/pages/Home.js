@@ -11,18 +11,6 @@ import {
 import BaseLayout from "../components/layout/BaseLayout";
 import { Payments, Money, Equalizer, ArrowRightAlt } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import api from "../config/axios";
-import { API_ENDPOINTS } from "../config/api";
-import {
-  PageLayout,
-  CardLayout,
-  TransactionCard,
-  PrimaryButton,
-  SecondaryButton,
-  Title,
-  Subtitle,
-  ErrorContainer,
-} from "../components/theme";
 
 const Home = () => {
   const navigate = useNavigate();
