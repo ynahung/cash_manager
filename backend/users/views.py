@@ -39,7 +39,7 @@ class UserCreateView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = self.perform_create(serializer)
-        token = Token.objects.get(user=user)
+        token = Token.objects.create(user=user)
         headers = self.get_success_headers(serializer.data)
 
         return Response(
@@ -122,7 +122,8 @@ class UserLoginView(generics.GenericAPIView):
         user = serializer.validated_data["user"]
         login(request, user)
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key, "user_id": user.pk, "email": user.email})
+        serializer = UserSerializer(user)
+        return Response({"token": token.key, "user": serializer.data})
 
 
 class UserLogoutView(generics.GenericAPIView):

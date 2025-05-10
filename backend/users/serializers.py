@@ -1,6 +1,6 @@
-from django.contrib.auth import authenticate
-from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 
 from .models import User
 
@@ -10,7 +10,14 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("id", "email", "username", "password")
+        fields = (
+            "id",
+            "email",
+            "username",
+            "password",
+            "first_name",
+            "last_name",
+        )
         extra_kwargs = {"password": {"write_only": True, "min_length": 8}}
 
     def create(self, validated_data):
@@ -29,32 +36,38 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class AuthTokenSerializer(serializers.ModelSerializer):
+class AuthTokenSerializer(serializers.Serializer):
     """Serializer for user authentication object."""
 
-    class Meta:
-        model = User
-        fields = ("email", "password")
-        extra_kwargs = {
-            "password": {
-                "style": {"input_type": "password"},
-                "trim_whitespace": False,
-                "write_only": True,
-            }
-        }
+    email = serializers.EmailField()
+    password = serializers.CharField(
+        style={"input_type": "password"},
+        trim_whitespace=False,
+        write_only=True,
+    )
 
     def validate(self, attrs):
         """Validate and authenticate the user."""
         email = attrs.get("email")
         password = attrs.get("password")
 
-        user = authenticate(
-            request=self.context.get("request"), username=email, password=password
-        )
-
+        user = get_user_model().objects.filter(email=email).first()
         if not user:
-            msg = _("Unable to authenticate with provided credentials")
+            msg = {"detail": "No user found with this email address"}
+            raise serializers.ValidationError(msg, code="authorization")
+
+        if not user.check_password(password):
+            msg = {"detail": "Invalid password"}
             raise serializers.ValidationError(msg, code="authorization")
 
         attrs["user"] = user
         return attrs
+
+    def create(self, validated_data):
+        """Create and return an authentication token."""
+        user = validated_data["user"]
+        return Token.objects.create(user=user)
+
+    def update(self, instance, validated_data):
+        """Update is not supported for authentication tokens."""
+        raise NotImplementedError("Updating authentication tokens is not supported")

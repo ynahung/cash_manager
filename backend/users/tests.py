@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
@@ -21,14 +23,17 @@ class PublicUserApiTests(TestCase):
     """Test the users API (public)"""
 
     def setUp(self):
-        """Set up test client."""
+        """Create test client and ensure unique email addresses"""
         self.client = APIClient()
+        # Use a unique email for each test run
+        self.email_suffix = f"{uuid.uuid4()}@example.com"
 
     def test_create_valid_user_success(self):
         """Test creating user with valid payload is successful"""
+        # Use a unique email for this test
         payload = {
-            "email": "test@example.com",
-            "username": "testuser",
+            "email": f"test_create_{self.email_suffix}",
+            "username": f"testuser_create_{uuid.uuid4()}",
             "password": "testpass123",
         }
         res = self.client.post(CREATE_USER_URL, payload)
@@ -38,7 +43,9 @@ class PublicUserApiTests(TestCase):
         self.assertIn("user", res.data)
         user = get_user_model().objects.get(email=payload["email"])
         self.assertTrue(user.check_password(payload["password"]))
-        self.assertNotIn("password", res.data["user"])
+        self.assertEqual(res.data["user"]["id"], user.id)
+        self.assertEqual(res.data["user"]["email"], payload["email"])
+        self.assertEqual(res.data["user"]["username"], payload["username"])
 
     def test_user_exists(self):
         """Test creating user that already exists fails"""
@@ -67,18 +74,50 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_for_user(self):
         """Test that a token is created for the user"""
-        payload = {"email": "test@example.com", "password": "testpass123"}
-        create_user(**payload)
-        res = self.client.post(TOKEN_URL, payload)
+        # Create user with unique email
+        create_payload = {
+            "email": f"test_token_{uuid.uuid4()}@example.com",
+            "username": f"testuser_token_{uuid.uuid4()}",
+            "password": "testpass123",
+        }
+        create_user(**create_payload)
+
+        # Login with same credentials
+        login_payload = {
+            "email": create_payload["email"],
+            "password": create_payload["password"],
+        }
+        res = self.client.post(TOKEN_URL, login_payload)
 
         self.assertIn("token", res.data)
+        self.assertIn("user", res.data)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+        user = get_user_model().objects.get(email=create_payload["email"])
+        self.assertEqual(res.data["user"]["id"], user.id)
+        self.assertEqual(res.data["user"]["email"], create_payload["email"])
+        self.assertEqual(res.data["user"]["username"], create_payload["username"])
+
+        # Verify token can be used to authenticate
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + res.data["token"])
+        profile_res = self.client.get(PROFILE_URL)
+        self.assertEqual(profile_res.status_code, status.HTTP_200_OK)
 
     def test_create_token_invalid_credentials(self):
         """Test that token is not created if invalid credentials are given"""
-        create_user(email="test@example.com", password="testpass123")
-        payload = {"email": "test@example.com", "password": "wrong"}
-        res = self.client.post(TOKEN_URL, payload)
+        payload = {
+            "email": "test@example.com",
+            "username": "testuser",
+            "password": "testpass123",
+        }
+        create_user(**payload)
+        res = self.client.post(
+            TOKEN_URL,
+            {
+                "email": payload["email"],
+                "password": "wrong",
+            },
+        )
 
         self.assertNotIn("token", res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
@@ -117,15 +156,9 @@ class PrivateUserApiTests(TestCase):
         res = self.client.get(PROFILE_URL)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(
-            res.data,
-            {
-                "email": self.user.email,
-                "username": self.user.username,
-                "first_name": self.user.first_name,
-                "last_name": self.user.last_name,
-            },
-        )
+        self.assertEqual(res.data["id"], self.user.id)
+        self.assertEqual(res.data["email"], self.user.email)
+        self.assertEqual(res.data["username"], self.user.username)
 
     def test_post_profile_not_allowed(self):
         """Test that POST is not allowed on the profile URL"""

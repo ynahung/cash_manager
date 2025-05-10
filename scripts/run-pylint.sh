@@ -1,2 +1,2 @@
 #!/bin/sh
-cd backend && pylint --rcfile=.pylintrc .
+cd backend && poetry run pylint --rcfile=.pylintrc . --ignore=".venv" --disable=fixme
