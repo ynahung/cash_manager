@@ -28,6 +28,18 @@
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
     "lint:check": "eslint \"src/**/*.{js,jsx,ts,tsx}\""
   },
+  "jest": {
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "[/\\]node_modules[/\\](?!(@mui|axios)/)"
+    ],
+    "moduleDirectories": ["node_modules", "src"],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -35,6 +47,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.24.1",
+    "@babel/preset-react": "^7.24.1",
+    "babel-jest": "^29.7.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
