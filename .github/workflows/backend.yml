@@ -62,8 +62,9 @@ jobs:
       run: |
         cd backend
         source $(poetry env info --path)/bin/activate
-        flake8 .
-        pylint .
+        # Exclude virtual environment directories from linting
+        flake8 . --exclude=*.pyc,__pycache__,.venv,venv
+        pylint . --ignore=*.pyc,__pycache__,.venv,venv
 
   deploy:
     needs: build
