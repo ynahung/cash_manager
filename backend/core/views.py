@@ -17,4 +17,8 @@ class TransactionViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
+        """Return queryset filtered by user."""
+        if getattr(self, "swagger_fake_view", False):
+            # Return empty queryset for Swagger schema generation
+            return self.queryset.none()
         return self.queryset.filter(user=self.request.user)

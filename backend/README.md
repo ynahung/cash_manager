@@ -82,15 +82,50 @@ ALLOWED_HOSTS=localhost,127.0.0.1
 API_VERSION=v1
 ```
 
+## API Documentation
+
+The API documentation is available at:
+- Swagger UI: http://127.0.0.1:8000/swagger/
+- ReDoc: http://127.0.0.1:8000/redoc/
+
+## Authentication
+
+The backend uses token-based authentication. When making authenticated requests to the API, include the token in the Authorization header with the prefix "Token".
+
+Example curl command:
+```bash
+curl -X 'GET' \
+  'http://127.0.0.1:8000/api/auth/profile/' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Token 1885e8fe41493cbc9bce9f0504bdb2468da64a6a'
+```
+
+To get a token, use the login endpoint:
+```bash
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/auth/login/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "email": "your-email@example.com",
+    "password": "your-password"
+  }'
+```
+
+## API Endpoints
+
+### Authentication
+- POST `/api/auth/register/` - Register a new user
+- POST `/api/auth/login/` - Get authentication token
+- GET `/api/auth/profile/` - Get user profile
+- PUT/PATCH `/api/auth/profile/` - Update user profile
+- POST `/api/auth/logout/` - Logout and invalidate token
+
 ## Running Tests
 
 ```bash
 python manage.py test
 ```
-
-## API Documentation
-
-The API documentation is available at http://127.0.0.1:8000/api/docs/
 
 ## Contributing
 
