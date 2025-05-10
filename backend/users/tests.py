@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
 
 CREATE_USER_URL = reverse("users:register")
@@ -33,9 +34,11 @@ class PublicUserApiTests(TestCase):
         res = self.client.post(CREATE_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertIn("token", res.data)
+        self.assertIn("user", res.data)
         user = get_user_model().objects.get(email=payload["email"])
         self.assertTrue(user.check_password(payload["password"]))
-        self.assertNotIn("password", res.data)
+        self.assertNotIn("password", res.data["user"])
 
     def test_user_exists(self):
         """Test creating user that already exists fails"""
@@ -64,11 +67,7 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_for_user(self):
         """Test that a token is created for the user"""
-        payload = {
-            "email": "test@example.com",
-            "username": "testuser",
-            "password": "testpass123",
-        }
+        payload = {"email": "test@example.com", "password": "testpass123"}
         create_user(**payload)
         res = self.client.post(TOKEN_URL, payload)
 
@@ -77,14 +76,8 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_invalid_credentials(self):
         """Test that token is not created if invalid credentials are given"""
-        create_user(
-            email="test@example.com", username="testuser", password="testpass123"
-        )
-        payload = {
-            "email": "test@example.com",
-            "username": "testuser",
-            "password": "wrong",
-        }
+        create_user(email="test@example.com", password="testpass123")
+        payload = {"email": "test@example.com", "password": "wrong"}
         res = self.client.post(TOKEN_URL, payload)
 
         self.assertNotIn("token", res.data)
@@ -92,13 +85,15 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_no_user(self):
         """Test that token is not created if user doesn't exist"""
-        payload = {
-            "email": "test@example.com",
-            "username": "testuser",
-            "password": "testpass123",
-        }
+        payload = {"email": "test@example.com", "password": "testpass123"}
         res = self.client.post(TOKEN_URL, payload)
 
+        self.assertNotIn("token", res.data)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_token_missing_field(self):
+        """Test that email and password are required"""
+        res = self.client.post(TOKEN_URL, {"email": "one", "password": ""})
         self.assertNotIn("token", res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -108,19 +103,29 @@ class PrivateUserApiTests(TestCase):
 
     def setUp(self):
         """Set up test client and authenticated user."""
-        self.client = APIClient()
         self.user = create_user(
-            email="test@example.com", username="testuser", password="testpass123"
+            email="test@example.com",
+            username="testuser",
+            password="testpass123",
         )
-        self.client.force_authenticate(self.user)
+        self.token = Token.objects.create(user=self.user)
+        self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
 
     def test_retrieve_profile_success(self):
         """Test retrieving profile for logged in user"""
         res = self.client.get(PROFILE_URL)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data["email"], self.user.email)
-        self.assertEqual(res.data["username"], self.user.username)
+        self.assertEqual(
+            res.data,
+            {
+                "email": self.user.email,
+                "username": self.user.username,
+                "first_name": self.user.first_name,
+                "last_name": self.user.last_name,
+            },
+        )
 
     def test_post_profile_not_allowed(self):
         """Test that POST is not allowed on the profile URL"""
@@ -130,7 +135,7 @@ class PrivateUserApiTests(TestCase):
 
     def test_update_user_profile(self):
         """Test updating the user profile for authenticated user"""
-        payload = {"username": "newuser", "password": "newpassword123"}
+        payload = {"username": "newusername", "password": "newpassword123"}
 
         res = self.client.patch(PROFILE_URL, payload)
 
@@ -142,6 +147,9 @@ class PrivateUserApiTests(TestCase):
     def test_logout_success(self):
         """Test that user can successfully logout"""
         res = self.client.post(LOGOUT_URL)
+
+        with self.assertRaises(Token.DoesNotExist):
+            Token.objects.get(user=self.user)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertIn("detail", res.data)

@@ -12,7 +12,7 @@ class UserCreateView(generics.CreateAPIView):
     Create a new user account.
 
     Creates a new user account with the provided email and password.
-    Returns the created user's information.
+    Returns the created user's information along with an authentication token.
 
     Request Body:
     - email: User's email address
@@ -22,11 +22,31 @@ class UserCreateView(generics.CreateAPIView):
     - last_name: User's last name (optional)
 
     Response:
-    201 - User created successfully with user details
+    201 - User created successfully with token and user details
     400 - Invalid input data
     """
 
     serializer_class = UserSerializer
+    authentication_classes = []  # Remove authentication requirement for registration
+    permission_classes = []  # Remove permission requirement for registration
+
+    def perform_create(self, serializer):
+        """Create user."""
+        return serializer.save()
+
+    def create(self, request, *args, **kwargs):
+        """Create user and return token."""
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.perform_create(serializer)
+        token = Token.objects.get(user=user)
+        headers = self.get_success_headers(serializer.data)
+
+        return Response(
+            {"token": token.key, "user": serializer.data},
+            status=status.HTTP_201_CREATED,
+            headers=headers,
+        )
 
 
 class UserDetailView(generics.RetrieveUpdateAPIView):
