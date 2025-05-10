@@ -29,6 +29,7 @@ class Migration(migrations.Migration):
                 (
                     "transaction_type",
                     models.CharField(
+
                         choices=[("income", "Income"), ("expense", "Expense")],
                         max_length=10,
                     ),

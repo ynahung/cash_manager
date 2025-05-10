@@ -17,16 +17,15 @@ repos:
         pass_filenames: false
         always_run: true
 
-  - repo: https://github.com/pycqa/flake8
-    rev: 6.1.0
+  - repo: local
     hooks:
       - id: flake8
-        language_version: python3.13
-        files: \.(pyi?|ipynb)$
-        additional_dependencies: ["flake8-docstrings"]
-        args: ["--max-line-length=79", "--select=E,F,W,C90"]
-        exclude: '__pycache__|.*\.pyc|.venv'
+        name: Run flake8
+        language: system
+        entry: ./scripts/run-flake8.sh
         stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
 
   - repo: local
     hooks:
