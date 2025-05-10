@@ -36,6 +36,7 @@ SchemaView = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/auth/", include("cash_manager.users.urls")),
     path("api/", include("core.urls")),
     re_path(
         r"^swagger(?P<format>\.[a-z0-9]+)$",
