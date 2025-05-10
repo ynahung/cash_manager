@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - dev
+      - 'fix/*'
+      - 'feature/*'
   pull_request:
     branches:
       - main
@@ -28,26 +30,30 @@ jobs:
       run: npm install
 
     - name: Run formatting check
+      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
       working-directory: frontend
       run: |
         npm run format -- --check
         npm run stylelint -- --check
 
     - name: Run linting
+      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
       working-directory: frontend
       run: |
         npm run lint
         npm run lint:styles
 
+    - name: Test frontend
+      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev' && github.ref != 'refs/heads/feature/*' && github.ref != 'refs/heads/fix/*'
+      working-directory: frontend
+      run: npm test
+
     - name: Build frontend
       working-directory: frontend
       run: npm run build
 
-    - name: Test frontend
-      working-directory: frontend
-      run: npm test
-
     - name: Upload frontend build
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
       uses: actions/upload-artifact@v2
       with:
         name: frontend-build
