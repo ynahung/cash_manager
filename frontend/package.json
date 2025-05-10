@@ -29,13 +29,9 @@
     "lint:check": "eslint \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "jest": {
-    "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
-    },
     "transformIgnorePatterns": [
       "[/\\]node_modules[/\\](?!(@mui|axios)/)"
     ],
-    "moduleDirectories": ["node_modules", "src"],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
     }
