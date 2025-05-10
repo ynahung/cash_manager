@@ -37,6 +37,14 @@ repos:
 
   - repo: local
     hooks:
+      - id: prettier
+        name: Run prettier
+        language: system
+        entry: ./scripts/run-prettier.sh
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
+
       - id: safety-check
         name: Run safety check
         language: system
