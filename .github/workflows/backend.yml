@@ -21,32 +21,39 @@ jobs:
       with:
         python-version: '3.11'
 
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.6.1
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install -r backend/requirements.txt
+        cd backend
+        poetry install
 
     - name: Run tests
       run: |
         cd backend
-        python manage.py test
+        poetry run python manage.py test
 
     - name: Run formatting check
       run: |
-        pip install black isort
-        black --check .
-        isort --check .
+        cd backend
+        poetry run black --check .
+        poetry run isort --check .
 
     - name: Run security checks
       run: |
-        pip install safety
-        safety check
+        cd backend
+        poetry run safety check
 
     - name: Run linting
       run: |
-        pip install flake8 pylint
-        flake8 backend/
-        pylint backend/
+        cd backend
+        poetry run flake8 backend/
+        poetry run pylint backend/
 
   deploy:
     needs: build

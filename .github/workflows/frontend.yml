@@ -48,7 +48,7 @@ jobs:
       run: npm test
 
     - name: Upload frontend build
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2
       with:
         name: frontend-build
         path: frontend/build
@@ -60,7 +60,7 @@ jobs:
 
     steps:
     - name: Download frontend build
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v2
       with:
         name: frontend-build
 
