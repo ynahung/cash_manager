@@ -14,31 +14,39 @@ function Home() {
     // Test API connection
     setLoading(true);
     setError(null);
-    
+
     try {
       // Log the API endpoints for debugging
-      console.log('API Endpoints:', API_ENDPOINTS);
-      
-      axios.get(API_ENDPOINTS.transactions)
-        .then(response => {
-          console.log('API Connection Success:', response.data);
+      console.log("API Endpoints:", API_ENDPOINTS);
+
+      axios
+        .get(API_ENDPOINTS.transactions)
+        .then((response) => {
+          console.log("API Connection Success:", response.data);
         })
-        .catch(error => {
-          console.error('API Connection Error:', error);
-          setError('Failed to connect to backend server');
+        .catch((error) => {
+          console.error("API Connection Error:", error);
+          setError("Failed to connect to backend server");
         })
         .finally(() => {
           setLoading(false);
         });
     } catch (error) {
-      console.error('Configuration Error:', error);
-      setError('Failed to initialize application configuration');
+      console.error("Configuration Error:", error);
+      setError("Failed to initialize application configuration");
       setLoading(false);
     }
   }, []);
 
   return (
-    <Box sx={{ my: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box
+      sx={{
+        my: 4,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       {loading && (
         <Box sx={{ mb: 4 }}>
           <CircularProgress />

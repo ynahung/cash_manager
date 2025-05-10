@@ -30,6 +30,36 @@ cash_manager/
    REACT_APP_API_URL=http://localhost:8000
    ```
 
+### Pre-commit Setup
+
+To set up the pre-commit hooks environment:
+
+1. Install pyenv if you haven't already:
+```bash
+# Install pyenv
+apt-get install pyenv  # On Ubuntu
+brew install pyenv     # On macOS
+
+# Add pyenv to PATH
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+
+# Initialize pyenv
+echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+2. Set up the pre-commit environment:
+```bash
+./scripts/setup_precommit_env.sh
+```
+
+This will:
+- Create a dedicated Python virtual environment
+- Install all required Python dependencies
+- Install pre-commit hooks
+- Initialize the project environment
+
 ### Backend Setup
 1. Install and configure pyenv if you haven't already:
 ```bash

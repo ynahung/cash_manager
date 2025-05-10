@@ -12,8 +12,8 @@ const API_CONFIG = {
 const env = "dev";
 
 // Log the environment and configuration for debugging
-console.log('Environment:', env);
-console.log('Available environments:', Object.keys(API_CONFIG));
+console.log("Environment:", env);
+console.log("Available environments:", Object.keys(API_CONFIG));
 
 // Export the full URL for each endpoint
 export const API_ENDPOINTS = {
