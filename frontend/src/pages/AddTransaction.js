@@ -10,8 +10,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_ENDPOINTS } from "../config/api";
+import api from "../config/axios";
 
 function AddTransaction() {
   const navigate = useNavigate();
@@ -24,7 +23,7 @@ function AddTransaction() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_ENDPOINTS.transactions, {
+      await api.post('/transactions/', {
         transaction_type: transactionType,
         amount: parseFloat(amount),
         description,
