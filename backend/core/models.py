@@ -12,9 +12,7 @@ class Transaction(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    transaction_type = models.CharField(
-        max_length=10, choices=TRANSACTION_TYPES
-    )
+    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
     description = models.TextField()
     category = models.CharField(max_length=50)
     date = models.DateField()
