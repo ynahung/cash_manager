@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Table,
@@ -20,20 +20,20 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-} from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
-import axios from 'axios';
-import { API_ENDPOINTS } from '../config/api';
+} from "@mui/material";
+import { Delete, Edit } from "@mui/icons-material";
+import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
 
 function Transactions() {
   const [transactions, setTransactions] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const [transactionType, setTransactionType] = useState('income');
-  const [amount, setAmount] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
-  const [date, setDate] = useState('');
+  const [transactionType, setTransactionType] = useState("income");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [date, setDate] = useState("");
 
   useEffect(() => {
     fetchTransactions();
@@ -44,7 +44,7 @@ function Transactions() {
       const response = await axios.get(API_ENDPOINTS.transactions);
       setTransactions(response.data);
     } catch (error) {
-      console.error('Error fetching transactions:', error);
+      console.error("Error fetching transactions:", error);
     }
   };
 
@@ -53,7 +53,7 @@ function Transactions() {
       await axios.delete(`${API_ENDPOINTS.transactions}${id}/`);
       fetchTransactions();
     } catch (error) {
-      console.error('Error deleting transaction:', error);
+      console.error("Error deleting transaction:", error);
     }
   };
 
@@ -78,30 +78,27 @@ function Transactions() {
             description,
             category,
             date,
-          }
+          },
         );
       } else {
-        await axios.post(
-          API_ENDPOINTS.transactions,
-          {
-            transaction_type: transactionType,
-            amount: parseFloat(amount),
-            description,
-            category,
-            date,
-          }
-        );
+        await axios.post(API_ENDPOINTS.transactions, {
+          transaction_type: transactionType,
+          amount: parseFloat(amount),
+          description,
+          category,
+          date,
+        });
       }
       setOpen(false);
       fetchTransactions();
     } catch (error) {
-      console.error('Error saving transaction:', error);
+      console.error("Error saving transaction:", error);
     }
   };
 
   return (
     <Box sx={{ my: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
         <Typography variant="h4" component="h1">
           Transactions
         </Typography>
@@ -109,11 +106,11 @@ function Transactions() {
           variant="contained"
           onClick={() => {
             setSelectedTransaction(null);
-            setTransactionType('income');
-            setAmount('');
-            setDescription('');
-            setCategory('');
-            setDate('');
+            setTransactionType("income");
+            setAmount("");
+            setDescription("");
+            setCategory("");
+            setDate("");
             setOpen(true);
           }}
         >
@@ -136,17 +133,23 @@ function Transactions() {
           <TableBody>
             {transactions.map((transaction) => (
               <TableRow key={transaction.id}>
-                <TableCell>{new Date(transaction.date).toLocaleDateString()}</TableCell>
+                <TableCell>
+                  {new Date(transaction.date).toLocaleDateString()}
+                </TableCell>
                 <TableCell>
                   <Typography
-                    color={transaction.transaction_type === 'income' ? 'primary' : 'secondary'}
+                    color={
+                      transaction.transaction_type === "income"
+                        ? "primary"
+                        : "secondary"
+                    }
                   >
                     {transaction.transaction_type.charAt(0).toUpperCase() +
-                    transaction.transaction_type.slice(1)}
+                      transaction.transaction_type.slice(1)}
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  {transaction.transaction_type === 'income' ? '+' : '-'}
+                  {transaction.transaction_type === "income" ? "+" : "-"}
                   {transaction.amount.toFixed(2)}
                 </TableCell>
                 <TableCell>{transaction.description}</TableCell>
@@ -165,9 +168,14 @@ function Transactions() {
         </Table>
       </TableContainer>
 
-      <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>
-          {selectedTransaction ? 'Edit Transaction' : 'Add New Transaction'}
+          {selectedTransaction ? "Edit Transaction" : "Add New Transaction"}
         </DialogTitle>
         <DialogContent>
           <FormControl fullWidth sx={{ mb: 2 }}>
@@ -216,7 +224,7 @@ function Transactions() {
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
           <Button onClick={handleSave} variant="contained">
-            {selectedTransaction ? 'Update' : 'Add'}
+            {selectedTransaction ? "Update" : "Add"}
           </Button>
         </DialogActions>
       </Dialog>

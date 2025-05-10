@@ -1,0 +1,54 @@
+repos:
+  - repo: local
+    hooks:
+      - id: black
+        name: Run black
+        language: system
+        entry: ./scripts/run-black.sh
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
+
+      - id: isort
+        name: Run isort
+        language: system
+        entry: ./scripts/run-isort.sh
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
+
+  - repo: local
+    hooks:
+      - id: flake8
+        name: Run flake8
+        language: system
+        entry: ./scripts/run-flake8.sh
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
+
+      - id: pylint
+        name: Run pylint
+        language: system
+        entry: ./scripts/run-pylint.sh
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
+
+  - repo: local
+    hooks:
+      - id: prettier
+        name: Run prettier
+        language: system
+        entry: ./scripts/run-prettier.sh
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
+
+      - id: safety-check
+        name: Run safety check
+        language: system
+        entry: ./scripts/safety-check.sh
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true

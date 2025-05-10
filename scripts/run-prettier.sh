@@ -1,0 +1,2 @@
+#!/bin/sh
+cd frontend && npx prettier --write "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"

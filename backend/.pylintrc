@@ -1,0 +1,15 @@
+[MESSAGES CONTROL]
+# Disable messages
+disable=import-outside-toplevel,missing-module-docstring,missing-class-docstring,too-few-public-methods,too-many-ancestors,no-member
+
+[FORMAT]
+# Ignore migration file naming
+ignore-patterns=.*_initial.py
+
+[BASIC]
+# Ignore migration files
+ignore=.*_initial.py
+
+[DESIGN]
+# Allow more than 7 ancestors for Django views
+max-parents=11

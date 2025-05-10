@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
-import { Box, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { API_ENDPOINTS } from '../config/api';
+import React, { useState } from "react";
+import {
+  Box,
+  Typography,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
 
 function AddTransaction() {
   const navigate = useNavigate();
-  const [transactionType, setTransactionType] = useState('income');
-  const [amount, setAmount] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [transactionType, setTransactionType] = useState("income");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,9 +31,9 @@ function AddTransaction() {
         category,
         date,
       });
-      navigate('/transactions');
+      navigate("/transactions");
     } catch (error) {
-      console.error('Error adding transaction:', error);
+      console.error("Error adding transaction:", error);
     }
   };
 
@@ -35,7 +44,7 @@ function AddTransaction() {
       </Typography>
 
       <form onSubmit={handleSubmit}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <FormControl fullWidth>
             <InputLabel>Transaction Type</InputLabel>
             <Select
@@ -83,12 +92,7 @@ function AddTransaction() {
             required
           />
 
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            sx={{ mt: 2 }}
-          >
+          <Button type="submit" variant="contained" size="large" sx={{ mt: 2 }}>
             Add Transaction
           </Button>
         </Box>

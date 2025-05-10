@@ -1,6 +1,6 @@
-import React from 'react';
-import { Box, Typography, Button, Link } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { Box, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
@@ -13,12 +13,12 @@ function Home() {
       <Typography variant="body1" paragraph>
         Manage your cash flow and expenses easily with our intuitive interface.
       </Typography>
-      
+
       <Box sx={{ my: 4 }}>
         <Button
           variant="contained"
           size="large"
-          onClick={() => navigate('/transactions')}
+          onClick={() => navigate("/transactions")}
         >
           View Transactions
         </Button>
@@ -26,7 +26,7 @@ function Home() {
           variant="outlined"
           size="large"
           sx={{ ml: 2 }}
-          onClick={() => navigate('/transactions/add')}
+          onClick={() => navigate("/transactions/add")}
         >
           Add New Transaction
         </Button>

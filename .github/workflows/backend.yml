@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - dev
+      - 'fix/*'
+      - 'feature/*'
   pull_request:
     branches:
       - main
@@ -34,26 +36,34 @@ jobs:
         poetry install
 
     - name: Run tests
+      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
       run: |
         cd backend
-        poetry run python manage.py test
+        source $(poetry env info --path)/bin/activate
+        python manage.py test
 
     - name: Run formatting check
+      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
       run: |
         cd backend
-        poetry run black --check .
-        poetry run isort --check .
+        source $(poetry env info --path)/bin/activate
+        black --check .
+        isort --check .
 
     - name: Run security checks
+      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
       run: |
         cd backend
-        poetry run safety check
+        source $(poetry env info --path)/bin/activate
+        safety check
 
     - name: Run linting
+      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
       run: |
         cd backend
-        poetry run flake8 backend/
-        poetry run pylint backend/
+        source $(poetry env info --path)/bin/activate
+        flake8 . --exclude=*.pyc,__pycache__,.venv,venv --ignore=E501
+        pylint . --ignore=*.pyc,__pycache__,.venv,venv
 
   deploy:
     needs: build

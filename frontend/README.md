@@ -1,33 +1,72 @@
-# Getting Started with Create React App
+# Cash Manager Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend component of the Cash Manager application, built with React and TypeScript.
+
+## Setup
+
+### Prerequisites
+
+1. Node.js (v18 or higher)
+2. npm (v7 or higher)
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/ynahung/cash_manager.git
+cd cash_manager/frontend
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Configure environment variables:
+Create a `.env` file in the root directory with the following variables:
+```
+REACT_APP_API_URL=http://localhost:8000/api/v1/
+REACT_APP_ENV=dev
+```
+
+4. Start the development server:
+```bash
+npm start
+```
+
+The app will be available at http://localhost:3000/
+
+## Project Structure
+
+```
+frontend/
+├── public/             # Static files
+├── src/               # Source code
+│   ├── components/    # React components
+│   ├── pages/        # Page components
+│   ├── services/     # API services
+│   ├── styles/       # Styles and Tailwind CSS
+│   ├── utils/        # Utility functions
+│   ├── App.tsx       # Root component
+│   └── index.tsx     # Entry point
+├── package.json      # Dependencies and scripts
+└── tsconfig.json     # TypeScript configuration
+```
 
 ## Available Scripts
 
-In the project directory, you can run:
-
 ### `npm start`
 
-Runs the app in the development mode.\
+Runs the app in development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Launches the test runner in the interactive watch mode.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Builds the app for production to the `build` folder.
 
 ### `npm run eject`
 
@@ -39,11 +78,28 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## API Configuration
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The frontend uses a configurable API endpoint system. The configuration is located in `src/config/api.ts` and supports different environments:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```typescript
+export const API_CONFIG = {
+  dev: 'http://localhost:8000/api/v1/',
+  prod: 'https://api.yourdomain.com/api/v1/',
+};
+
+export const API_URL = process.env.REACT_APP_ENV === 'prod' 
+  ? API_CONFIG.prod 
+  : API_CONFIG.dev;
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ### Code Splitting
 

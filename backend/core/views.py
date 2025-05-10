@@ -1,12 +1,15 @@
-from rest_framework import viewsets, permissions
+from rest_framework import permissions, viewsets
+
 from .models import Transaction
 from .serializers import TransactionSerializer
+
 
 class TransactionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows transactions to be viewed or edited.
     """
-    queryset = Transaction.objects.all().order_by('-date')
+
+    queryset = Transaction.objects.all().order_by("-date")
     serializer_class = TransactionSerializer
     permission_classes = [permissions.IsAuthenticated]
 
