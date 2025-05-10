@@ -25,7 +25,7 @@ fi
 start_django() {
     echo "Starting Django server..."
     cd "$PROJECT_ROOT/backend" || { echo "Error: Could not enter backend directory"; exit 1; }
-    python manage.py runserver &
+    poetry run python manage.py runserver &
     echo "Django server started!"
 }
 
