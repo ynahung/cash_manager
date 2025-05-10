@@ -27,6 +27,14 @@ repos:
         pass_filenames: false
         always_run: true
 
+      - id: pylint
+        name: Run pylint
+        language: system
+        entry: ./scripts/run-pylint.sh
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
+
   - repo: local
     hooks:
       - id: safety-check
