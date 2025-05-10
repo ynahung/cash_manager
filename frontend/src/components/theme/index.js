@@ -1,5 +1,7 @@
 import { styled } from "@mui/material/styles";
-import { Box, Card, Typography, Button } from "@mui/material";
+import { Box, Card } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
