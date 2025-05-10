@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Button, Link } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
