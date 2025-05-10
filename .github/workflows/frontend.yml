@@ -27,7 +27,7 @@ jobs:
 
     - name: Install dependencies
       working-directory: frontend
-      run: npm install
+      run: npm install --legacy-peer-deps
 
     - name: Run formatting check
       if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
