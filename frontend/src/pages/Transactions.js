@@ -22,8 +22,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
-import axios from "axios";
-import { API_ENDPOINTS } from "../config/api";
+import api from "../config/axios";
 
 function Transactions() {
   const [transactions, setTransactions] = useState([]);
@@ -41,7 +40,7 @@ function Transactions() {
 
   const fetchTransactions = async () => {
     try {
-      const response = await axios.get(API_ENDPOINTS.transactions);
+      const response = await api.get("/transactions/");
       setTransactions(response.data);
     } catch (error) {
       console.error("Error fetching transactions:", error);
@@ -50,7 +49,7 @@ function Transactions() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API_ENDPOINTS.transactions}${id}/`);
+      await api.delete(`/transactions/${id}/`);
       fetchTransactions();
     } catch (error) {
       console.error("Error deleting transaction:", error);
@@ -70,18 +69,15 @@ function Transactions() {
   const handleSave = async () => {
     try {
       if (selectedTransaction) {
-        await axios.put(
-          `${API_ENDPOINTS.transactions}${selectedTransaction.id}/`,
-          {
-            transaction_type: transactionType,
-            amount: parseFloat(amount),
-            description,
-            category,
-            date,
-          },
-        );
+        await api.put(`/transactions/${selectedTransaction.id}/`, {
+          transaction_type: transactionType,
+          amount: parseFloat(amount),
+          description,
+          category,
+          date,
+        });
       } else {
-        await axios.post(API_ENDPOINTS.transactions, {
+        await api.post("/transactions/", {
           transaction_type: transactionType,
           amount: parseFloat(amount),
           description,

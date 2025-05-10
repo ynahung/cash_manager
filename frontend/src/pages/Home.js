@@ -1,93 +1,169 @@
-import React, { useEffect, useState } from "react";
-import { Box, Typography, Button, CircularProgress } from "@mui/material";
+import React from "react";
+import {
+  Typography,
+  Box,
+  Paper,
+  Button,
+  Grid,
+  Avatar,
+  useTheme,
+} from "@mui/material";
+import BaseLayout from "../components/layout/BaseLayout";
+import { Payments, Money, Equalizer, ArrowRightAlt } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_ENDPOINTS } from "../config/api";
 
-function Home() {
+const Home = () => {
   const navigate = useNavigate();
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    // Test API connection
-    setLoading(true);
-    setError(null);
-
-    try {
-      // Log the API endpoints for debugging
-      console.log("API Endpoints:", API_ENDPOINTS);
-
-      axios
-        .get(API_ENDPOINTS.transactions)
-        .then((response) => {
-          console.log("API Connection Success:", response.data);
-        })
-        .catch((error) => {
-          console.error("API Connection Error:", error);
-          setError("Failed to connect to backend server");
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } catch (error) {
-      console.error("Configuration Error:", error);
-      setError("Failed to initialize application configuration");
-      setLoading(false);
-    }
-  }, []);
+  const theme = useTheme();
 
   return (
-    <Box
-      sx={{
-        my: 4,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      {loading && (
-        <Box sx={{ mb: 4 }}>
-          <CircularProgress />
-        </Box>
-      )}
-      {error && (
-        <Typography color="error" sx={{ mb: 4 }}>
-          {error}
+    <BaseLayout>
+      <Box
+        sx={{
+          p: 3,
+          width: "100%",
+        }}
+      >
+        <Typography
+          variant="h4"
+          component="h1"
+          gutterBottom
+          sx={{
+            color:
+              theme.palette.mode === "dark"
+                ? "rgba(255, 255, 255, 0.9)"
+                : "rgba(0, 0, 0, 0.9)",
+          }}
+        >
+          Welcome to Cash Manager
         </Typography>
-      )}
-      <Typography variant="h4" component="h1" gutterBottom>
-        Welcome to Cash Manager
-      </Typography>
-      <Typography variant="body1" paragraph>
-        Manage your cash flow and expenses easily with our intuitive interface.
-      </Typography>
+        <Box sx={{ mt: 4 }}>
+          <Grid container spacing={3}>
+            {/* Quick Actions */}
+            <Grid item xs={12} md={6}>
+              <Paper sx={{ p: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  Quick Actions
+                </Typography>
+                <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+                  <Button
+                    variant="contained"
+                    startIcon={<Money />}
+                    onClick={() => navigate("/transactions")}
+                    fullWidth
+                  >
+                    View Transactions
+                  </Button>
+                  <Button
+                    variant="contained"
+                    startIcon={<Payments />}
+                    onClick={() => navigate("/transactions/add")}
+                    fullWidth
+                  >
+                    Add Transaction
+                  </Button>
+                </Box>
+              </Paper>
+            </Grid>
 
-      <Box sx={{ my: 4 }}>
-        <Button
-          variant="contained"
-          size="large"
-          onClick={() => navigate("/transactions")}
-        >
-          View Transactions
-        </Button>
-        <Button
-          variant="outlined"
-          size="large"
-          sx={{ ml: 2 }}
-          onClick={() => navigate("/transactions/add")}
-        >
-          Add New Transaction
-        </Button>
+            {/* Statistics */}
+            <Grid item xs={12} md={6}>
+              <Paper sx={{ p: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  Your Financial Overview
+                </Typography>
+                <Box sx={{ mt: 2 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <Avatar sx={{ bgcolor: theme.palette.success.main, mr: 2 }}>
+                      <Money />
+                    </Avatar>
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">
+                        Total Income
+                      </Typography>
+                      <Typography variant="h5">$12,500.00</Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <Avatar sx={{ bgcolor: theme.palette.error.main, mr: 2 }}>
+                      <Payments />
+                    </Avatar>
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">
+                        Total Expenses
+                      </Typography>
+                      <Typography variant="h5">$8,200.00</Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Avatar sx={{ bgcolor: theme.palette.primary.main, mr: 2 }}>
+                      <Equalizer />
+                    </Avatar>
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">
+                        Balance
+                      </Typography>
+                      <Typography variant="h5" color="success.main">
+                        $4,300.00
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </Paper>
+            </Grid>
+
+            {/* Recent Activity */}
+            <Grid item xs={12}>
+              <Paper sx={{ p: 3 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    mb: 2,
+                  }}
+                >
+                  <Typography variant="h6">Recent Activity</Typography>
+                  <Button
+                    variant="text"
+                    size="small"
+                    endIcon={<ArrowRightAlt />}
+                    onClick={() => navigate("/transactions")}
+                  >
+                    View All
+                  </Button>
+                </Box>
+                <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+                  <Paper sx={{ p: 2, flex: 1 }}>
+                    <Typography variant="body2" color="text.secondary">
+                      May 10, 2025
+                    </Typography>
+                    <Typography variant="h6" sx={{ mb: 1 }}>
+                      Salary Payment
+                    </Typography>
+                    <Typography variant="body1" color="success.main">
+                      +$5,000.00
+                    </Typography>
+                  </Paper>
+                  <Paper sx={{ p: 2, flex: 1 }}>
+                    <Typography variant="body2" color="text.secondary">
+                      May 10, 2025
+                    </Typography>
+                    <Typography variant="h6" sx={{ mb: 1 }}>
+                      Grocery Shopping
+                    </Typography>
+                    <Typography variant="body1" color="error.main">
+                      -$250.00
+                    </Typography>
+                  </Paper>
+                </Box>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Box>
       </Box>
-
-      <Typography variant="body1" paragraph>
-        This application helps you track your income and expenses, categorize
-        transactions, and get insights into your financial habits.
-      </Typography>
-    </Box>
+    </BaseLayout>
   );
-}
+};
 
 export default Home;
