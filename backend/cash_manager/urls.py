@@ -37,7 +37,7 @@ SchemaView = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/auth/", include("users.urls")),
+    path("api/auth/", include(("users.urls", "users"), namespace="users")),
     path("api/", include("core.urls")),
     re_path(
         r"^swagger(?P<format>\.[a-z0-9]+)$",
