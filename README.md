@@ -101,6 +101,92 @@ The project includes bash scripts to easily manage both Django and React servers
 ./scripts/stop_servers.sh react
 ```
 
+## Development Workflow and CI/CD Setup
+
+### Branch Protection Rules
+
+The project uses protected branches with the following rules:
+
+1. **dev branch**
+   - Protected from direct pushes
+   - Requires pull requests for changes
+   - Requires passing CI/CD checks before merge
+   - Requires at least one approved review
+
+2. **main branch**
+   - Protected from direct pushes
+   - Requires pull requests from dev branch
+   - Requires passing CI/CD checks before merge
+   - Requires at least one approved review
+
+### Pull Request Workflow
+
+1. Create a feature branch from dev:
+```bash
+git checkout -b feature/your-feature-name dev
+```
+
+2. Make your changes and commit them
+
+3. Push your feature branch:
+```bash
+git push origin feature/your-feature-name
+```
+
+4. Create a pull request from your feature branch to dev
+   - Add a clear description of your changes
+   - Link any related issues
+   - Request a review from a team member
+
+5. After review and CI/CD checks pass, merge to dev
+
+6. When ready for production, create a PR from dev to main
+   - Follow the same review and CI/CD process
+   - This will trigger production deployment
+
+### CI/CD Pipeline
+
+### Frontend CI/CD Pipeline
+
+1. **Code Quality Checks**
+   - Runs on push to main/dev branches and pull requests
+   - Runs formatting check using Prettier and Stylelint
+   - Runs linting using ESLint and Stylelint
+
+2. **Build and Test**
+   - Sets up Node.js environment
+   - Installs dependencies and builds the frontend
+   - Runs frontend tests
+   - Uploads build artifacts
+
+2. **Deployment**
+   - Automatically deploys to production when pushing to main branch
+   - Requires the following GitHub Secrets:
+     - AWS_ACCESS_KEY_ID
+     - AWS_SECRET_ACCESS_KEY
+     - AWS_DEFAULT_REGION
+     - CLOUDFRONT_DISTRIBUTION_ID
+   - Deploy process:
+     - Syncs build files to S3 bucket
+     - Invalidates CloudFront cache
+
+### Backend CI/CD Pipeline
+
+1. **Code Quality Checks**
+   - Runs on push to main/dev branches and pull requests
+   - Runs formatting check using Black and isort
+   - Runs linting using flake8 and pylint
+   - Runs security checks using safety
+
+2. **Build and Test**
+   - Sets up Python environment
+   - Runs tests
+
+2. **Deployment**
+   - Automatically deploys to production when pushing to main branch
+   - Requires AWS credentials for deployment
+   - Current deployment process is a placeholder - customize according to your infrastructure
+
 ### Manual Server Management
 
 If you prefer to start the servers manually:
