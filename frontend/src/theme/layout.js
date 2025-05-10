@@ -2,7 +2,14 @@ import React from "react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import theme from "./theme";
-import { PageContainer } from "./styles";
+import {
+  PageContainer,
+  SectionHeader,
+  FormContainer,
+  ErrorContainer,
+  GridContainer,
+  LoadingContainer,
+} from "./styles";
 
 const AppLayout = styled("div")(({ theme }) => ({
   minHeight: "100vh",

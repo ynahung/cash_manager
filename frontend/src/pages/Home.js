@@ -4,9 +4,9 @@ import {
   Box,
   Paper,
   Button,
+  Grid,
   Avatar,
   useTheme,
-  Grid,
 } from "@mui/material";
 import BaseLayout from "../components/layout/BaseLayout";
 import { Payments, Money, Equalizer, ArrowRightAlt } from "@mui/icons-material";

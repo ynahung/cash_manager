@@ -3,9 +3,7 @@ import {
   Box,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
-  Divider,
   Drawer,
   IconButton,
   useTheme,
@@ -17,7 +15,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 const SidebarContainer = styled(Box)(({ theme, collapsed }) => ({
   width: collapsed ? 60 : 240,
   height: "100vh",
-  backgroundColor: theme.palette.background,
+  backgroundColor: useTheme().palette.background,
   borderRight: "1px solid",
   borderColor: theme.palette.divider,
   display: "flex",

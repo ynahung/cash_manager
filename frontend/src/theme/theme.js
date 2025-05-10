@@ -84,4 +84,3 @@ const createThemeConfig = (mode) => {
 
 export const lightTheme = createTheme(createThemeConfig("light"));
 export const darkTheme = createTheme(createThemeConfig("dark"));
-export default theme;
