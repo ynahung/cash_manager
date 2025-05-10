@@ -226,6 +226,39 @@ DB_PORT=5432
 REACT_APP_ENV=dev  # or 'prod' for production
 ```
 
+## Code Formatting and Pre-commit Hooks
+
+This project uses pre-commit hooks to ensure consistent code formatting and quality. The following tools are configured:
+
+1. **Black** - Code formatter with line length of 88 characters
+2. **isort** - Import organization tool
+3. **flake8** - Code style checker
+4. **Safety** - Dependency security checker
+
+To set up pre-commit hooks:
+
+```bash
+pre-commit install
+```
+
+The hooks will automatically run before each commit to:
+- Format Python code with black
+- Organize imports with isort
+- Check code style with flake8
+- Check for security vulnerabilities in dependencies
+
+You can also run these checks manually:
+
+```bash
+# Run all pre-commit hooks
+pre-commit run --all-files
+
+# Run specific hooks
+pre-commit run black
+pre-commit run isort
+pre-commit run flake8
+```
+
 ## API Configuration
 The frontend uses a configurable API endpoint system. The configuration is located in `frontend/src/config/api.js` and supports different environments:
 
