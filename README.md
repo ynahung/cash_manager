@@ -2,6 +2,13 @@
 
 A full-stack web application for managing cash flow and expenses.
 
+## Documentation
+
+- [Backend Documentation](backend/README.md)
+- [Frontend Documentation](frontend/README.md)
+- [Server Management](#server-management)
+- [Code Formatting](#code-formatting)
+
 ## Project Structure
 
 ```
@@ -100,6 +107,47 @@ The project includes bash scripts to easily manage both Django and React servers
 ```bash
 ./scripts/stop_servers.sh react
 ```
+
+## Code Formatting
+
+This project uses pre-commit hooks to ensure consistent code formatting and quality. The following tools are configured:
+
+1. **Black** - Code formatter with line length of 88 characters
+2. **isort** - Import organization tool
+3. **flake8** - Code style checker
+4. **Safety** - Dependency security checker
+
+To set up pre-commit hooks:
+
+```bash
+pre-commit install
+```
+
+The hooks will automatically run before each commit to:
+- Format Python code with black
+- Organize imports with isort
+- Check code style with flake8
+- Check for security vulnerabilities in dependencies
+
+You can also run these checks manually:
+
+```bash
+# Run all pre-commit hooks
+pre-commit run --all-files
+
+# Run specific hooks
+pre-commit run black
+pre-commit run isort
+pre-commit run flake8
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## Development Workflow and CI/CD Setup
 
