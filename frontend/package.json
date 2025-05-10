@@ -28,14 +28,7 @@
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
     "lint:check": "eslint \"src/**/*.{js,jsx,ts,tsx}\""
   },
-  "jest": {
-    "transformIgnorePatterns": [
-      "[/\\]node_modules[/\\](?!(@mui|axios)/)"
-    ],
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
-    }
-  },
+
   "eslintConfig": {
     "extends": [
       "react-app",
