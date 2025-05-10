@@ -40,7 +40,6 @@ jobs:
       run: |
         cd backend
         source $(poetry env info --path)/bin/activate
-        cd cash_manager
         python manage.py test
 
     - name: Run formatting check
@@ -48,7 +47,6 @@ jobs:
       run: |
         cd backend
         source $(poetry env info --path)/bin/activate
-        cd cash_manager
         black --check .
         isort --check .
 
@@ -57,7 +55,6 @@ jobs:
       run: |
         cd backend
         source $(poetry env info --path)/bin/activate
-        cd cash_manager
         safety check
 
     - name: Run linting
@@ -65,7 +62,6 @@ jobs:
       run: |
         cd backend
         source $(poetry env info --path)/bin/activate
-        cd cash_manager
         flake8 .
         pylint .
 
