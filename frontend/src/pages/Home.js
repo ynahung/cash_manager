@@ -1,16 +1,28 @@
-import React from 'react';
-import { Typography, Box, Paper, Button, Avatar, useTheme, Grid } from '@mui/material';
-import BaseLayout from '../components/layout/BaseLayout';
-import { 
-  Payments, 
-  Money, 
-  Equalizer, 
-  ArrowRightAlt 
-} from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import {
+  Typography,
+  Box,
+  Paper,
+  Button,
+  Avatar,
+  useTheme,
+  Grid,
+} from "@mui/material";
+import BaseLayout from "../components/layout/BaseLayout";
+import { Payments, Money, Equalizer, ArrowRightAlt } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 import api from "../config/axios";
 import { API_ENDPOINTS } from "../config/api";
-import { PageLayout, CardLayout, TransactionCard, PrimaryButton, SecondaryButton, Title, Subtitle, ErrorContainer } from "../components/theme";
+import {
+  PageLayout,
+  CardLayout,
+  TransactionCard,
+  PrimaryButton,
+  SecondaryButton,
+  Title,
+  Subtitle,
+  ErrorContainer,
+} from "../components/theme";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -18,13 +30,23 @@ const Home = () => {
 
   return (
     <BaseLayout>
-      <Box sx={{
-        p: 3,
-        width: '100%'
-      }}>
-        <Typography variant="h4" component="h1" gutterBottom sx={{
-          color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)'
-        }}>
+      <Box
+        sx={{
+          p: 3,
+          width: "100%",
+        }}
+      >
+        <Typography
+          variant="h4"
+          component="h1"
+          gutterBottom
+          sx={{
+            color:
+              theme.palette.mode === "dark"
+                ? "rgba(255, 255, 255, 0.9)"
+                : "rgba(0, 0, 0, 0.9)",
+          }}
+        >
           Welcome to Cash Manager
         </Typography>
         <Box sx={{ mt: 4 }}>
@@ -35,11 +57,11 @@ const Home = () => {
                 <Typography variant="h6" gutterBottom>
                   Quick Actions
                 </Typography>
-                <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
+                <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
                   <Button
                     variant="contained"
                     startIcon={<Money />}
-                    onClick={() => navigate('/transactions')}
+                    onClick={() => navigate("/transactions")}
                     fullWidth
                   >
                     View Transactions
@@ -47,7 +69,7 @@ const Home = () => {
                   <Button
                     variant="contained"
                     startIcon={<Payments />}
-                    onClick={() => navigate('/transactions/add')}
+                    onClick={() => navigate("/transactions/add")}
                     fullWidth
                   >
                     Add Transaction
@@ -63,7 +85,7 @@ const Home = () => {
                   Your Financial Overview
                 </Typography>
                 <Box sx={{ mt: 2 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                     <Avatar sx={{ bgcolor: theme.palette.success.main, mr: 2 }}>
                       <Money />
                     </Avatar>
@@ -71,12 +93,10 @@ const Home = () => {
                       <Typography variant="body2" color="text.secondary">
                         Total Income
                       </Typography>
-                      <Typography variant="h5">
-                        $12,500.00
-                      </Typography>
+                      <Typography variant="h5">$12,500.00</Typography>
                     </Box>
                   </Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                     <Avatar sx={{ bgcolor: theme.palette.error.main, mr: 2 }}>
                       <Payments />
                     </Avatar>
@@ -84,12 +104,10 @@ const Home = () => {
                       <Typography variant="body2" color="text.secondary">
                         Total Expenses
                       </Typography>
-                      <Typography variant="h5">
-                        $8,200.00
-                      </Typography>
+                      <Typography variant="h5">$8,200.00</Typography>
                     </Box>
                   </Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
                     <Avatar sx={{ bgcolor: theme.palette.primary.main, mr: 2 }}>
                       <Equalizer />
                     </Avatar>
@@ -109,20 +127,25 @@ const Home = () => {
             {/* Recent Activity */}
             <Grid item xs={12}>
               <Paper sx={{ p: 3 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                  <Typography variant="h6">
-                    Recent Activity
-                  </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    mb: 2,
+                  }}
+                >
+                  <Typography variant="h6">Recent Activity</Typography>
                   <Button
                     variant="text"
                     size="small"
                     endIcon={<ArrowRightAlt />}
-                    onClick={() => navigate('/transactions')}
+                    onClick={() => navigate("/transactions")}
                   >
                     View All
                   </Button>
                 </Box>
-                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
                   <Paper sx={{ p: 2, flex: 1 }}>
                     <Typography variant="body2" color="text.secondary">
                       May 10, 2025

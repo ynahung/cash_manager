@@ -40,7 +40,7 @@ function Transactions() {
 
   const fetchTransactions = async () => {
     try {
-      const response = await api.get('/transactions/');
+      const response = await api.get("/transactions/");
       setTransactions(response.data);
     } catch (error) {
       console.error("Error fetching transactions:", error);
@@ -77,7 +77,7 @@ function Transactions() {
           date,
         });
       } else {
-        await api.post('/transactions/', {
+        await api.post("/transactions/", {
           transaction_type: transactionType,
           amount: parseFloat(amount),
           description,

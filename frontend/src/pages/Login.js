@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import FormInput from '../components/FormInput';
-import { API_ENDPOINTS } from '../config/api';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import FormInput from "../components/FormInput";
+import { API_ENDPOINTS } from "../config/api";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [errors, setErrors] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +24,7 @@ const Login = () => {
     }));
     setErrors((prev) => ({
       ...prev,
-      [name]: '',
+      [name]: "",
     }));
   };
 
@@ -33,12 +33,12 @@ const Login = () => {
     let isValid = true;
 
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
       isValid = false;
     }
 
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
       isValid = false;
     }
 
@@ -59,16 +59,16 @@ const Login = () => {
       });
 
       // Store token in localStorage
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
       // Redirect to home page
-      window.location.href = '/';
+      window.location.href = "/";
     } catch (error) {
       if (error.response) {
-        setMessage(error.response.data.detail || 'Login failed');
+        setMessage(error.response.data.detail || "Login failed");
       } else {
-        setMessage('An error occurred. Please try again.');
+        setMessage("An error occurred. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -83,8 +83,11 @@ const Login = () => {
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Or{' '}
-            <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+            Or{" "}
+            <Link
+              to="/register"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+            >
               create a new account
             </Link>
           </p>
@@ -139,7 +142,10 @@ const Login = () => {
             </div>
 
             <div className="text-sm">
-              <Link to="/reset-password" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link
+                to="/reset-password"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
                 Forgot your password?
               </Link>
             </div>
@@ -151,7 +157,7 @@ const Login = () => {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
+              {loading ? "Signing in..." : "Sign in"}
             </button>
           </div>
         </form>

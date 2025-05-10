@@ -1,30 +1,32 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { API_ENDPOINTS } from '../config/api';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
 
 const ResetPassword = () => {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email) {
-      setMessage('Email is required');
+      setMessage("Email is required");
       return;
     }
 
     try {
       setLoading(true);
       await axios.post(`${API_ENDPOINTS.login}reset/`, { email });
-      setMessage('Password reset instructions have been sent to your email.');
+      setMessage("Password reset instructions have been sent to your email.");
     } catch (error) {
       if (error.response) {
-        setMessage(error.response.data.detail || 'Failed to send reset instructions');
+        setMessage(
+          error.response.data.detail || "Failed to send reset instructions",
+        );
       } else {
-        setMessage('An error occurred. Please try again.');
+        setMessage("An error occurred. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -56,7 +58,10 @@ const ResetPassword = () => {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div className="mb-4">
-              <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+              <label
+                htmlFor="email"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
                 Email address
               </label>
               <input
@@ -77,7 +82,7 @@ const ResetPassword = () => {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              {loading ? 'Sending...' : 'Send Reset Instructions'}
+              {loading ? "Sending..." : "Send Reset Instructions"}
             </button>
           </div>
 

@@ -1,11 +1,11 @@
-import React from 'react';
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import theme from './theme';
-import { PageContainer } from './styles';
+import React from "react";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import theme from "./theme";
+import { PageContainer } from "./styles";
 
-const AppLayout = styled('div')(({ theme }) => ({
-  minHeight: '100vh',
+const AppLayout = styled("div")(({ theme }) => ({
+  minHeight: "100vh",
   backgroundColor: theme.palette.background.default,
   color: theme.palette.text.primary,
 }));
@@ -14,9 +14,7 @@ export function AppThemeProvider({ children }) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppLayout>
-        {children}
-      </AppLayout>
+      <AppLayout>{children}</AppLayout>
     </ThemeProvider>
   );
 }
@@ -50,9 +48,7 @@ export function FormLayout({ children, title }) {
   return (
     <PageContainer>
       {title && <h2>{title}</h2>}
-      <FormContainer>
-        {children}
-      </FormContainer>
+      <FormContainer>{children}</FormContainer>
     </PageContainer>
   );
 }
@@ -60,9 +56,7 @@ export function FormLayout({ children, title }) {
 export function DashboardLayout({ children }) {
   return (
     <PageContainer>
-      <GridContainer>
-        {children}
-      </GridContainer>
+      <GridContainer>{children}</GridContainer>
     </PageContainer>
   );
 }
@@ -70,9 +64,7 @@ export function DashboardLayout({ children }) {
 export function LoadingLayout({ children }) {
   return (
     <PageContainer>
-      <LoadingContainer>
-        {children}
-      </LoadingContainer>
+      <LoadingContainer>{children}</LoadingContainer>
     </PageContainer>
   );
 }
@@ -80,9 +72,7 @@ export function LoadingLayout({ children }) {
 export function ErrorLayout({ children }) {
   return (
     <PageContainer>
-      <ErrorContainer>
-        {children}
-      </ErrorContainer>
+      <ErrorContainer>{children}</ErrorContainer>
     </PageContainer>
   );
 }

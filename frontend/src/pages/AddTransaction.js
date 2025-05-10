@@ -23,7 +23,7 @@ function AddTransaction() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/transactions/', {
+      await api.post("/transactions/", {
         transaction_type: transactionType,
         amount: parseFloat(amount),
         description,
