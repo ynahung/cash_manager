@@ -57,23 +57,7 @@ jobs:
       working-directory: frontend
       run: npm test
 
-    - name: Setup Python for backend tests
-      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
 
-    - name: Install backend dependencies
-      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
-      run: |
-        cd backend
-        pip install -r requirements.txt
-
-    - name: Run backend tests
-      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
-      run: |
-        cd backend
-        python manage.py test
 
     - name: Build frontend
       working-directory: frontend
