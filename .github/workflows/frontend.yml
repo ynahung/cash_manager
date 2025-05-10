@@ -33,15 +33,13 @@ jobs:
       if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
       working-directory: frontend
       run: |
-        npm run format -- --check
-        npm run stylelint -- --check
+        npm run format:check
 
     - name: Run linting
       if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
       working-directory: frontend
       run: |
-        npm run lint
-        npm run lint:styles
+        npm run lint:check
 
     - name: Test frontend
       if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'
