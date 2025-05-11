@@ -3,7 +3,6 @@ import { Paper, Typography, Box, Avatar, useTheme } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(3),
   borderRadius: theme.shape.borderRadius,
   transition: "box-shadow 0.2s ease-in-out",
   "&:hover": {
@@ -11,7 +10,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   },
   width: "100%",
   maxWidth: "100%",
-  margin: "5",
+  margin: theme.spacing(1),
   padding: theme.spacing(4),
   backgroundColor:
     theme.palette.mode === "dark"

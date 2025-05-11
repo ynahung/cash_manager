@@ -54,8 +54,6 @@ export const palette = {
 
 // Helper function to get colors based on mode
 export const getColors = (mode = "light") => {
-  const headerColor =
-    mode === "dark" ? palette.header.dark : palette.header.light;
   return {
     primary: {
       main: mode === "dark" ? palette.primary.dark : palette.primary.main,

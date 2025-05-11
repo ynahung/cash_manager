@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import Sidebar from "../sidebar/Sidebar";
 import Header from "../Header";
 import { Money, Payments, Equalizer } from "@mui/icons-material";
-import { ThemeProvider, CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import { lightTheme, darkTheme } from "../../theme/theme";
 import { useThemeContext } from "../theme/ThemeContext";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ const SIDEBAR_PADDING = "24px"; // px
 const BaseLayout = ({ children }) => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
-  const { darkMode, toggleTheme } = useThemeContext();
+  const { darkMode } = useThemeContext();
 
   const handleNavigation = (path) => {
     navigate(path);

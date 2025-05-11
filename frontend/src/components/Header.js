@@ -6,7 +6,6 @@ import { useThemeContext } from "./theme/ThemeContext";
 
 const Header = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { toggleTheme } = useThemeContext();
 
   return (
