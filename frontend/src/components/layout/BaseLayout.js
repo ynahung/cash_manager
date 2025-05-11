@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import { Box, IconButton, Typography } from "@mui/material";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
-import Money from "@mui/icons-material/Money";
-import Payments from "@mui/icons-material/Payments";
-import Equalizer from "@mui/icons-material/Equalizer";
+import { Box, Typography } from "@mui/material";
 import Sidebar from "../sidebar/Sidebar";
-import { lightTheme, darkTheme } from "../theme/theme";
+import Header from "../Header";
+import { Money, Payments, Equalizer } from "@mui/icons-material";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { lightTheme, darkTheme } from "../../theme/theme";
+import { useThemeContext } from "../theme/ThemeContext";
 import { useNavigate } from "react-router-dom";
 
 const SIDEBAR_WIDTH = "240px"; // px
@@ -16,12 +14,8 @@ const SIDEBAR_PADDING = "24px"; // px
 
 const BaseLayout = ({ children }) => {
   const navigate = useNavigate();
-  const [darkMode, setDarkMode] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-
-  const handleThemeToggle = () => {
-    setDarkMode(!darkMode);
-  };
+  const { darkMode, toggleTheme } = useThemeContext();
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -38,19 +32,6 @@ const BaseLayout = ({ children }) => {
           position: "relative",
         }}
       >
-        {/* Theme Toggle */}
-        <Box
-          sx={{
-            position: "fixed",
-            top: 10,
-            right: 20,
-            zIndex: 1000,
-          }}
-        >
-          <IconButton size="small" onClick={handleThemeToggle} color="inherit">
-            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
-        </Box>
         {/* Sidebar */}
         <Box
           sx={{
@@ -59,10 +40,9 @@ const BaseLayout = ({ children }) => {
             left: 0,
             bottom: 0,
             width: collapsed ? COLLAPSED_WIDTH : SIDEBAR_WIDTH,
-            bgcolor: "background.sidebar",
-            borderRight: 1,
-            borderColor: "divider",
+            bgcolor: "background.paper",
             transition: "width 0.3s ease-in-out",
+            zIndex: 999, // Ensure sidebar appears below header
           }}
         >
           <Sidebar
@@ -98,6 +78,22 @@ const BaseLayout = ({ children }) => {
               }
             }}
           />
+        </Box>
+        {/* Header */}
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            right: 0,
+            left: collapsed ? COLLAPSED_WIDTH : SIDEBAR_WIDTH,
+            height: "64px",
+            bgcolor: "background.paper",
+            boxShadow: "none",
+            zIndex: 1001, // Below header but above content
+            transition: "left 0.3s ease-in-out",
+          }}
+        >
+          <Header />
         </Box>
 
         {/* Main Content */}
