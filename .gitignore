@@ -75,3 +75,6 @@ Thumbs.db
 *.swp
 *.swo
 .DS_Store
+
+# Personal
+.personal
