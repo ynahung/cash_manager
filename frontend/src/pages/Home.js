@@ -2,15 +2,15 @@ import React from "react";
 import {
   Typography,
   Box,
-  Paper,
   Button,
-  Grid,
+  Paper,
   Avatar,
   useTheme,
 } from "@mui/material";
 import BaseLayout from "../components/layout/BaseLayout";
 import { Payments, Money, Equalizer, ArrowRightAlt } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import BoxCard from "../components/BoxCard";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const Home = () => {
         sx={{
           p: 3,
           width: "100%",
+          mt: "64px", // 64px to match header height
         }}
       >
         <Typography
@@ -29,22 +30,24 @@ const Home = () => {
           component="h1"
           gutterBottom
           sx={{
-            color:
-              theme.palette.mode === "dark"
-                ? "rgba(255, 255, 255, 0.9)"
-                : "rgba(0, 0, 0, 0.9)",
+            fontSize: "2rem",
+            fontWeight: 600,
+            color: "text.primary",
           }}
         >
           Welcome to Cash Manager
         </Typography>
-        <Box sx={{ mt: 4 }}>
-          <Grid container spacing={3}>
-            {/* Quick Actions */}
-            <Grid item xs={12} md={6}>
-              <Paper sx={{ p: 3 }}>
-                <Typography variant="h6" gutterBottom>
-                  Quick Actions
-                </Typography>
+        <Box sx={{ mt: 1, p: 2 }}>
+          <Box sx={{ mt: 1, p: 2 }}>
+            <Box
+              sx={{
+                width: "100%",
+                "& > *": {
+                  mb: 4,
+                },
+              }}
+            >
+              <BoxCard title="Quick Actions">
                 <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
                   <Button
                     variant="contained"
@@ -63,15 +66,9 @@ const Home = () => {
                     Add Transaction
                   </Button>
                 </Box>
-              </Paper>
-            </Grid>
+              </BoxCard>
 
-            {/* Statistics */}
-            <Grid item xs={12} md={6}>
-              <Paper sx={{ p: 3 }}>
-                <Typography variant="h6" gutterBottom>
-                  Your Financial Overview
-                </Typography>
+              <BoxCard title="Your Financial Overview">
                 <Box sx={{ mt: 2 }}>
                   <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                     <Avatar sx={{ bgcolor: theme.palette.success.main, mr: 2 }}>
@@ -101,65 +98,75 @@ const Home = () => {
                     </Avatar>
                     <Box>
                       <Typography variant="body2" color="text.secondary">
-                        Balance
+                        Net Balance
                       </Typography>
-                      <Typography variant="h5" color="success.main">
-                        $4,300.00
-                      </Typography>
+                      <Typography variant="h5">$4,300.00</Typography>
                     </Box>
                   </Box>
                 </Box>
-              </Paper>
-            </Grid>
+              </BoxCard>
 
-            {/* Recent Activity */}
-            <Grid item xs={12}>
-              <Paper sx={{ p: 3 }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    mb: 2,
-                  }}
-                >
-                  <Typography variant="h6">Recent Activity</Typography>
-                  <Button
-                    variant="text"
-                    size="small"
-                    endIcon={<ArrowRightAlt />}
-                    onClick={() => navigate("/transactions")}
+              <BoxCard title="Recent Activity">
+                <Box sx={{ mt: 2 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      mb: 2,
+                    }}
                   >
-                    View All
-                  </Button>
+                    <Typography variant="subtitle1">
+                      Recent Transactions
+                    </Typography>
+                    <Button
+                      variant="text"
+                      size="small"
+                      endIcon={<ArrowRightAlt />}
+                      onClick={() => navigate("/transactions")}
+                    >
+                      View All
+                    </Button>
+                  </Box>
+                  <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+                    <Paper sx={{ p: 2, flex: 1 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        May 10, 2025
+                      </Typography>
+                      <Typography variant="h6" sx={{ mb: 1 }}>
+                        Salary Payment
+                      </Typography>
+                      <Typography variant="body1" color="success.main">
+                        +$5,000.00
+                      </Typography>
+                    </Paper>
+                    <Paper sx={{ p: 2, flex: 1 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        May 9, 2025
+                      </Typography>
+                      <Typography variant="h6" sx={{ mb: 1 }}>
+                        Grocery Shopping
+                      </Typography>
+                      <Typography variant="body1" color="error.main">
+                        -$150.00
+                      </Typography>
+                    </Paper>
+                    <Paper sx={{ p: 2, flex: 1 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        May 8, 2025
+                      </Typography>
+                      <Typography variant="h6" sx={{ mb: 1 }}>
+                        Rent Payment
+                      </Typography>
+                      <Typography variant="body1" color="error.main">
+                        -$250.00
+                      </Typography>
+                    </Paper>
+                  </Box>
                 </Box>
-                <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-                  <Paper sx={{ p: 2, flex: 1 }}>
-                    <Typography variant="body2" color="text.secondary">
-                      May 10, 2025
-                    </Typography>
-                    <Typography variant="h6" sx={{ mb: 1 }}>
-                      Salary Payment
-                    </Typography>
-                    <Typography variant="body1" color="success.main">
-                      +$5,000.00
-                    </Typography>
-                  </Paper>
-                  <Paper sx={{ p: 2, flex: 1 }}>
-                    <Typography variant="body2" color="text.secondary">
-                      May 10, 2025
-                    </Typography>
-                    <Typography variant="h6" sx={{ mb: 1 }}>
-                      Grocery Shopping
-                    </Typography>
-                    <Typography variant="body1" color="error.main">
-                      -$250.00
-                    </Typography>
-                  </Paper>
-                </Box>
-              </Paper>
-            </Grid>
-          </Grid>
+              </BoxCard>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </BaseLayout>
