@@ -1,7 +1,7 @@
 import React from "react";
 import { List, ListItem, IconButton, Box } from "@mui/material";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
-import { useTheme, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { useThemeContext } from "./theme/ThemeContext";
 
 const Header = () => {
