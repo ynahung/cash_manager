@@ -90,7 +90,13 @@ const BaseLayout = ({ children }) => {
             }
             collapsed={collapsed}
             onToggle={() => setCollapsed(!collapsed)}
-            onItemClick={(item) => handleNavigation(`/${item.id}`)}
+            onItemClick={(item) => {
+              if (item.id === "dashboard") {
+                navigate("/");
+              } else {
+                handleNavigation(`/${item.id}`);
+              }
+            }}
           />
         </Box>
 
