@@ -11,6 +11,7 @@ class TransactionSerializer(serializers.ModelSerializer):
             "user",
             "amount",
             "transaction_type",
+            "currency",
             "description",
             "category",
             "date",
