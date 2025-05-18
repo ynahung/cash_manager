@@ -26,7 +26,6 @@ TRANSACTION_TYPES = [
 
 
 class Transaction(models.Model):
-
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     transaction_type = models.CharField(max_length=12, choices=TRANSACTION_TYPES)
@@ -36,6 +35,14 @@ class Transaction(models.Model):
     date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    tags = models.JSONField(default=list, blank=True)
+    notes = models.TextField(blank=True)
+    receipt_url = models.URLField(blank=True)
 
     def __str__(self):
         return f"{self.transaction_type}: {self.amount} - {self.description}"
+
+    class Meta:
+        ordering = ["-date"]
+        verbose_name = "Transaction"
+        verbose_name_plural = "Transactions"

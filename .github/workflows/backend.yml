@@ -62,7 +62,7 @@ jobs:
       run: |
         cd backend
         source $(poetry env info --path)/bin/activate
-        flake8 . --exclude=*.pyc,__pycache__,.venv,venv --ignore=E501
+        flake8 . --exclude=*.pyc,__pycache__,.venv,venv --ignore=E501,W503
         pylint . --ignore=*.pyc,__pycache__,.venv,venv --disable=C0103
 
   deploy:
