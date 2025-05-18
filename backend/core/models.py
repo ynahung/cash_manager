@@ -20,6 +20,8 @@ CURRENCY_CHOICES = [
 TRANSACTION_TYPES = [
     ("income", "Income"),
     ("expense", "Expense"),
+    ("auto_income", "Auto Income"),
+    ("auto_expense", "Auto Expense"),
 ]
 
 
@@ -27,7 +29,7 @@ class Transaction(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
+    transaction_type = models.CharField(max_length=12, choices=TRANSACTION_TYPES)
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default="USD")
     description = models.TextField()
     category = models.CharField(max_length=50)
